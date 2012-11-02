@@ -1,34 +1,36 @@
 //A program to read Firefox's JSON bookmark files.
-package main
+package jason
 
-import "fmt"
-import "log"
 import "encoding/json"
+import "fmt"
 import "io/ioutil"
 
-type FFBookmarks struct {
+//The main wrapping object
+type ffBookmarks struct {
 	Title        string
 	Id           int
 	DateAdded    int64
 	LastModified int64
 	Type         string
 	Root         string
-	Children     []Folder
+	Children     []folder
 }
 
-type Folder struct {
+//A folder containing several bookmarks
+type folder struct {
 	Title        string
 	Id           int
 	Parent       int
 	DateAdded    int64
 	LastModified int64
-	Annos        []Annos
+	Annos        []annos
 	Type         string
 	Root         string
-	Children     []Bookmark
+	Children     []bookmark
 }
 
-type Annos struct {
+//Unknown what this object stores
+type annos struct {
 	Name     string
 	Flags    int
 	Expires  int
@@ -37,46 +39,38 @@ type Annos struct {
 	Value    string
 }
 
-type Bookmark struct {
+//A bookmark object
+type bookmark struct {
 	Title        string
 	Id           int
 	Parent       int
 	DateAdded    int64
 	LastModified int64
-	Annos        []Annos
+	Annos        []annos
 	Type         string
 	Uri          string
 	Keyword      string
 }
 
-//Error wrapper
-func main() {
-	err := readFFB()
+//Open reads a firefox json bookmark file into a ffb struct
+func Open(fileName string) (ffb *ffBookmarks, err error) {
+	buf, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func readFFB() (err error) {
-	buf, err := ioutil.ReadFile("a.json")
-	if err != nil {
-		return err
+		return nil, err
 	}
 
-	var ffb FFBookmarks
+	ffb = new(ffBookmarks)
 	json.Unmarshal(buf, &ffb)
 
-	ffb.PrintUri()
-
-	return nil
+	return ffb, nil
 }
 
 //PrintUri prints all bookmarks in ffb 
-func (ffb FFBookmarks) PrintUri() {
-	for _, child := range ffb.Children {
-		for _, nested := range child.Children {
-			if nested.Uri != "" {
-				fmt.Println(nested.Uri)
+func (ffb ffBookmarks) Print() {
+	for _, fol := range ffb.Children {
+		for _, bm := range fol.Children {
+			if bm.Uri != "" {
+				fmt.Println(bm.Uri)
 			}
 		}
 	}
