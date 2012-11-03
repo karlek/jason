@@ -10,32 +10,34 @@ type object struct {
 	Parent       int
 	DateAdded    int64
 	LastModified int64
-	Annons       []annon
+	Annos        []anno
 	Type         string
 	Uri          string
 	Keyword      string
 	Root         string
+	Charset      string
+	Index        int
 	Children     []object
 }
 
-type annon struct {
+type anno struct {
 	Name     string
 	Flags    int
 	Expires  int
-	MimeType string
+	MimeType *string
 	Type     int
 	Value    string
 }
 
 // Open opens the provided json bookmark file and returns the parsed bookmarks.
-func Open(filePath string) (obj object, err error) {
+func Open(filePath string) (obj *object, err error) {
 	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return object{}, err
+		return nil, err
 	}
 	err = json.Unmarshal(buf, &obj)
 	if err != nil {
-		return object{}, err
+		return nil, err
 	}
 	return obj, nil
 }
