@@ -6,7 +6,7 @@ import "fmt"
 import "io/ioutil"
 
 // The main wrapping object
-type ffBookmarks struct {
+type FFBookmarks struct {
 	Title        string
 	Id           int
 	DateAdded    int64
@@ -16,7 +16,7 @@ type ffBookmarks struct {
 	Children     []folder
 }
 
-// A folder containing several bookmarks
+// A folder containing several bookmarks or folders
 type folder struct {
 	Index        int
 	Title        string
@@ -54,20 +54,20 @@ type bookmark struct {
 }
 
 // Open reads a firefox json bookmark file into a ffb struct
-func Open(fileName string) (ffb *ffBookmarks, err error) {
+func Open(fileName string) (ffb *FFBookmarks, err error) {
 	buf, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
 	}
 
-	ffb = new(ffBookmarks)
+	ffb = new(FFBookmarks)
 	json.Unmarshal(buf, &ffb)
 
 	return ffb, nil
 }
 
 // PrintUri prints all bookmarks in ffb 
-func (ffb *ffBookmarks) Print() {
+func (ffb *FFBookmarks) Print() {
 	for _, fol := range ffb.Children {
 		for _, folOrBm := range fol.Children {
 			switch unk := folOrBm.(type) {

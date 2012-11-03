@@ -1,4 +1,4 @@
-//Example program for using jason
+// Example program for using jason
 package main
 
 import "flag"
@@ -33,6 +33,7 @@ func main() {
 
 }
 
+// Prints the contents of a Firefox JSON bookmark file
 func readJason(filePath string) (err error) {
 	ffb, err := jason.Open(filePath)
 	if err != nil {
