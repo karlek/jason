@@ -1,4 +1,4 @@
-// Example program for using jason
+// Example program for using jason.
 package main
 
 import "flag"
@@ -13,14 +13,14 @@ func init() {
 	flag.Parse()
 
 	if flag.NArg() < 1 {
-		usage()
+		flag.Usage()
 	}
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: %s [File(s)]\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "Usage: %s [FILE],,,\n", os.Args[0])
 	flag.PrintDefaults()
-	os.Exit(-1)
+	os.Exit(1)
 }
 
 func main() {
@@ -33,14 +33,14 @@ func main() {
 
 }
 
-// Prints the contents of a Firefox JSON bookmark file
 func readJason(filePath string) (err error) {
-	ffb, err := jason.Open(filePath)
+	obj, err := jason.Open(filePath)
 	if err != nil {
 		return err
 	}
 
-	ffb.Print()
-
+	for _, bookmark := range obj.Bookmarks() {
+		fmt.Println(bookmark)
+	}
 	return nil
 }
