@@ -14,15 +14,10 @@ Syntax - Print
 Installation - Library
 ------------
 Use `go get github.com/karlek/jason`
-   
-   `go get github.com/karlek/jason`
 
 Installation - Program
 ------------
 Use `go install github.com/karlek/jason/cmd/jason`
-   
-   `go install github.com/karlek/jason/cmd/jason`
-
 
 API documentation
 -----------------
