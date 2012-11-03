@@ -7,50 +7,50 @@ import "io/ioutil"
 
 // The main wrapping object
 type FFBookmarks struct {
-	Title        string
-	Id           int
-	DateAdded    int64
-	LastModified int64
-	Type         string
-	Root         string
-	Children     []folder
+	_        string   `json: "title"`
+	_        int      `json: "id"`
+	_        int64    `json: "dateAdded"`
+	_        int64    `json: "lastModified"`
+	_        string   `json: "type"`
+	_        string   `json: "root"`
+	Children []folder `json: "children"`
 }
 
 // A folder containing several bookmarks or folders
 type folder struct {
-	Index        int
-	Title        string
-	Id           int
-	Parent       int
-	DateAdded    int64
-	LastModified int64
-	Annos        []annos
-	Type         string
-	Root         string
-	Children     []interface{}
+	_        int           `json: "index"`
+	_        string        `json: "title"`
+	_        int           `json: "id"`
+	_        int           `json: "parent"`
+	_        int64         `json: "dateAdded"`
+	_        int64         `json: "lastModified"`
+	_        []annos       `json: "annos"`
+	_        string        `json: "type"`
+	_        string        `json: "root"`
+	Children []interface{} `json: "children"`
 }
 
 // Unknown what this object stores
 type annos struct {
-	Name     string
-	Flags    int
-	Expires  int
-	MimeType string
-	Type     int
-	Value    string
+	_ string  `json: "name"`
+	_ int     `json: "flags"`
+	_ int     `json: "expires"`
+	_ *string `json: "mimeType"`
+	_ int     `json: "type"`
+	_ string  `json: "value"`
 }
 
 // A bookmark object
 type bookmark struct {
-	Title        string
-	Id           int
-	Parent       int
-	DateAdded    int64
-	LastModified int64
-	Annos        []annos
-	Type         string
-	Uri          string
-	Keyword      string
+	_   string  `json: "title"`
+	_   int     `json: "id"`
+	_   int     `json: "parent"`
+	_   int64   `json: "dateAdded"`
+	_   int64   `json: "lastModified"`
+	_   []annos `json: "annos"`
+	_   string  `json: "type"`
+	Uri string  `json: "uri"`
+	_   string  `json: "keyword"`
 }
 
 // Open reads a firefox json bookmark file into a ffb struct
@@ -61,7 +61,10 @@ func Open(fileName string) (ffb *FFBookmarks, err error) {
 	}
 
 	ffb = new(FFBookmarks)
-	json.Unmarshal(buf, &ffb)
+	err = json.Unmarshal(buf, &ffb)
+	if err != nil {
+		return nil, err
+	}
 
 	return ffb, nil
 }
