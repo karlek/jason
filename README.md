@@ -9,7 +9,7 @@ Syntax - Print
 	if err != nil {
 		// Handle error
 	}
-	for _, bookmark := range obj.Bookmarks() {
+	for _, bookmark := range ffb.Bookmarks() {
 		fmt.Println(bookmark)
 	}
 
