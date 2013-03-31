@@ -10,10 +10,6 @@ import "github.com/karlek/jason"
 
 func init() {
 	flag.Usage = usage
-
-	if flag.NArg() < 1 {
-		flag.Usage()
-	}
 }
 
 func usage() {
@@ -24,6 +20,9 @@ func usage() {
 
 func main() {
 	flag.Parse()
+	if flag.NArg() < 1 {
+		flag.Usage()
+	}
 	for _, filePath := range flag.Args() {
 		err := readJason(filePath)
 		if err != nil {
