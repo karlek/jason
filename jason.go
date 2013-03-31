@@ -5,28 +5,10 @@ import "encoding/json"
 import "io/ioutil"
 
 type object struct {
-	Title        string
-	Id           int
-	Parent       int
-	DateAdded    int64
-	LastModified int64
-	Annos        []anno
-	Type         string
-	Uri          string
-	Keyword      string
-	Root         string
-	Charset      string
-	Index        int
-	Children     []object
-}
-
-type anno struct {
-	Name     string
-	Flags    int
-	Expires  int
-	MimeType *string
-	Type     int
-	Value    string
+	Title    string
+	Uri      string
+	Type     string
+	Children []object
 }
 
 // Open opens the provided json bookmark file and returns the parsed bookmarks.

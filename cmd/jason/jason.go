@@ -30,7 +30,6 @@ func main() {
 			log.Fatalln(err)
 		}
 	}
-
 }
 
 func readJason(filePath string) (err error) {
