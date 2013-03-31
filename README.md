@@ -9,7 +9,9 @@ Syntax - Print
 	if err != nil {
 		// Handle error
 	}
-	ffb.Print()
+	for _, bookmark := range ffb.Bookmarks() {
+		fmt.Println(bookmark)
+	}
 
 Installation - Library
 ------------
