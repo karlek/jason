@@ -1,12 +1,14 @@
-// Example program for using jason.
+// Jason prints the urls of a firefox bookmarks file(s).
 package main
 
-import "flag"
-import "fmt"
-import "log"
-import "os"
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
 
-import "github.com/karlek/jason"
+	"github.com/karlek/jason"
+)
 
 func init() {
 	flag.Usage = usage
